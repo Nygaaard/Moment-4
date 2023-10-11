@@ -105,5 +105,10 @@ function storeItem(){
 }
 //Raderar allt som är lagrat
 function clearStorage(){
-
+    //Rensar local storage
+    localStorage.clear();
+    
+    //Rensar listan och anropar utskrift
+    todolistEl.innerHTML = "";
+    loadStorage();
 }
