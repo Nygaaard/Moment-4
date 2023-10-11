@@ -61,6 +61,7 @@ function deleteItem(e){
 function checkItemText(){
     let input = newtodoEl.value;
 
+    //Kontrollerar att input är längre än 4 bokstäver
     if(input.length < 5 ){
         newtodobuttonEl.disabled = true;
         messageEl.innerHTML = "Ange minst fem tecken";
