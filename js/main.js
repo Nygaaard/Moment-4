@@ -1,4 +1,4 @@
-//En to do-lista 
+//Att göra-lista 
 //Av Andreas Nygård
 
 "use strict"; 
@@ -18,6 +18,7 @@ todolistEl.addEventListener("click", deleteItem);
 window.onload = init;
 
 //Funktioner
+
 function init(){
     //Inaktiverar knappen 
     newtodobuttonEl.disabled = true;
@@ -25,14 +26,14 @@ function init(){
     //Laddar upp lista vid sidladdning
     loadStorage();
 }
-
+//Lägger till item
 function addItem(){
     let input = newtodoEl.value;
 
     //Skapar nytt article-element
     let newEl = document.createElement("article");  
     //Lägger text-node
-    let newText = document.createTextNode(input);   
+    let newText = document.createTextNode(input); 
     //Slår ihop dessa
     newEl.appendChild(newText);
 
@@ -46,21 +47,20 @@ function addItem(){
     newtodoEl.value = "";
     newtodobuttonEl.disabled = true;
 
-
+    //Anropar funktion för att spara element
     storeItem();
 }
-
+//Raderar items
 function deleteItem(e){
     e.target.remove();
 
     //Lagra listan på nytt
     storeItem();
 }
-
+//Kontrollerar längd på input
 function checkItemText(){
     let input = newtodoEl.value;
 
-    //Kontrollera längd på text
     if(input.length < 5 ){
         newtodobuttonEl.disabled = true;
         messageEl.innerHTML = "Ange minst fem tecken";
@@ -69,11 +69,23 @@ function checkItemText(){
         messageEl.innerHTML = "";
     }
 }
-
+//Läser in kurser
 function loadStorage(){
-    console.log("Läser in lista...");
-}
+    //Konvertera tillbaka Json till array
+    let items = JSON.parse(localStorage.getItem("items"));
 
+    //Loopa igenom arrayen
+    for(let i = 0; i < items.length; i++){
+        //Skapar nya element
+        let newEl = document.createElement("article");  
+        let newText = document.createTextNode(items[i]); 
+        newEl.appendChild(newText);
+
+        //Lägger till i listan
+        todolistEl.appendChild(newEl);
+    }
+}
+//Sparar kurser
 function storeItem(){
     //Läser in att göra-inlägg
     let items = document.querySelectorAll("article");
@@ -81,20 +93,17 @@ function storeItem(){
     //Skapar en lista
     let todoArr = [];
 
-    //Lagrar articles från listan till array
+    //Lagrar articles från listan i array
     for(let i = 0; i < items.length; i++){
         todoArr.push(items[i].innerHTML);
     }
 
-    //Konverterar till JSON
+    //Konverterar array till JSON
     let jsonString = JSON.stringify(todoArr);
     //Lagra 
     localStorage.setItem("items", jsonString);
-
-    console.log(todoArr);
 }
-
+//Raderar allt som är lagrat
 function clearStorage(){
 
 }
-
